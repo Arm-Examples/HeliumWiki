@@ -1,0 +1,57 @@
+name = "analyze"
+description = "Analyze optimization guidelines"
+model = "gpt-6.1-sol"
+model_reasoning_effort = "high"
+developer_instructions = """
+Load the structured data file from its path in .flow folder.
+Use it to load only the relevant section from the original document 
+instead of loading the whole document.
+Analyze the content of this section once it has been loaded.
+Identify if the optimization guideline is related to:
+* hardware
+* programming language
+* software development pattern
+* techniques
+
+Use the skill in helium-wiki/SKILL.md to find related optimization guidelines.
+If no optimization guideline is found, create a new one following the instructions below.
+If an optimization guideline is found, update it with any new relevant information and don't create a new page.
+After creation or update, validate and correct the page following instruction below.
+
+
+# Wiki page creation instructions
+Create a wiki page in the right wiki folder in helium-wiki/wiki.
+It is a markdown file with a yaml header.
+yaml header must respect the schema defined in data/schemas.yaml
+yaml header uses some tags. If some are missing, create them in data/tags.yaml
+Only update architectures,hardware_features and techniques. 
+Other tags categories must not be changed.
+
+The type must correspond to folder in the wiki.
+The id is the name of the markdown file without the extension.
+The id must begin with <type>- where <type> is the type of the wiki page (e.g., hardware, languages, patterns, techniques).
+Links between wiki pages are made though their id and corresponding yaml fields.
+The source in yaml header is either a URL or the name of an official document
+
+The markdown must start, after the yaml header, with a short paragraph that describes when the optimization guideline should be applied and what problem it solves.
+The markdown MUST NOT contain any customer or partner proprietary information.
+
+# Page validation and correction
+The title of the page must be consistent with its content:
+- For instance, if the page is about a specific hardware feature, the title should clearly reflect that feature.
+- For instance, if the page has sections for different cortex-m core, then the title cannot reference only one core.
+
+If the title must be changed, the id of the page must also be updated to reflect the new title and all the links pointing to it.
+
+The markdown must start, after the yaml header, with a short paragraph that describes when the optimization guideline should be applied and what problem it solves.
+
+Don't leave, in the generated wiki pages, references to local documents that won't be available to the user of the skill.  Only references acceptable are URL and names of official public documents.
+Don't talk about documents that are not available. Don't use wording like : the guide, the tutorial etc ... except if a link to the public source is available and that it is clear from context what "the" is refering to.
+If "the" is not clear from the context, write the sentence differently.
+
+The markdown MUST NOT contain any customer or partner proprietary information.
+
+The markdown MUST NOT contains any benchmark data (like cycles).
+
+Analyze the generated markdown to ensure it follows those guidelines and correct it if necessary.
+"""
